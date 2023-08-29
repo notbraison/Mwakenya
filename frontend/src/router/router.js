@@ -1,9 +1,9 @@
 import {createRouter,createWebHistory} from 'vue-router';
 import HomePage from '../pages/HomePage.vue';
 import RegistrationPage from '../pages/RegistrationPage.vue';
-
-/*import LoginPage from '../pages/LoginPage.vue';
-import UserList from '../pages/UserList.vue'; */
+import LoginPage from '../pages/LoginPage.vue';
+import LearningVideos from '../pages/LearningVideos.vue';
+import AddVideos from '../pages/VideoUploader.vue';
 
 
 const routes=[
@@ -17,17 +17,22 @@ const routes=[
         component: RegistrationPage,
         name:'Registration'
     },
-    /*
+    
     {
         path:'/login',
         component: LoginPage,
         name:'Login'
     },
     {
-        path:'/users',
-        component: UserList,
-        name:'Users'
-    } */
+        path:'/videos',
+        component: LearningVideos,
+        name:'LearningVideos'
+    },
+    {
+        path:'/addvideos',
+        component: AddVideos,
+        name:'AddVideos'
+    }
 
 ]
 

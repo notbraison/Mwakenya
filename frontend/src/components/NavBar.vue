@@ -17,21 +17,17 @@
           <router-link to="/register" class="nav-link active">Register</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <router-link to="/login" class="nav-link active">Login</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Certify</a>
+          <router-link to="/videos" class="nav-link active">Videos</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Compete</a>
-        </li>
-        
-        
+        </li>       
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+
+      
     </div>
   </div>
 </nav>

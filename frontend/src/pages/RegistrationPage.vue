@@ -19,9 +19,38 @@
     </div>
 
     <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input type="text" class="form-control" id="age" placeholder="e.g 13" v-model="age" required>
+    </div>&nbsp;
+
+ <div class="input-group mb-3">
+  <label class="input-group-text" for="inputGroupSelect01">User</label>
+  <select class="form-select" id="inputGroupSelect01" v-model="selectedOption" required>
+
+    <option value="1">Student</option>
+    <option value="2">parent</option>
+    <option value="3">Teacher</option>
+  </select>
+</div>&nbsp;
+
+<div class="mb-3" v-if="selectedOption==='1'">
+    <label  for="grade" class="form-label">Grade</label>
+    <input type="text" class="form-control" id="grade" placeholder="e.g 6" v-model="grade" required>
+    </div>&nbsp;
+
+<div class="input-group mb-3" v-if="selectedOption==='1'">
+    <label  for="gender" class="input-group-text">gender</label>
+    <select class="form-select" id="gender"  v-model="gender" required>
+<option value="1">Male</option>
+<option value="2">Female</option>
+</select>
+    </div>&nbsp;
+
+    <div class="mb-3">
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" id="password" placeholder="password" v-model="password" required>
-    </div>
+    </div>&nbsp;
+
 
     <div class="btn-container">
         <button type="submit" class="btn btn-success">Register</button>
@@ -48,16 +77,23 @@ export default{
         name:'',
         email:'',
         password:'',
+        age:'',
+        grade:'',
+        selectedOption: '1',
+        gender:''
       }
     },
 
     methods:{
       async register(){
-       await axios.post('http://127.0.0.1:8000/api/users',
+       await axios.post('',
         {
         'name':this.name,
          'email':this.email,
-         'password':this.password
+         'password':this.password,
+         'age':this.age,
+         'grade':this.grade,
+         'gender':this.gender,
         });
 
       }
@@ -79,7 +115,7 @@ export default{
       text-align: center;
     }
     .registrationform{
-      height: 600px;
+      height: 900px;
       width: 1200px;
       margin-top:10%;
    
