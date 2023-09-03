@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Subject extends Model
+class Roles extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'subject_name'
-
+        'name'
     ];
-
-    public function grade(): BelongsToMany
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(Grade::class);
+        return $this->belongsToMany(Users::class);
     }
-
-    
 
 }

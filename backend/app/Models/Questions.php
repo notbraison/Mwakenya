@@ -4,23 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Books extends Model
+class Questions extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
-        'bookpath',
+        'questionText',
         'grade',
         'subject',
+        'topic'
     ];
-    public function grade()
+    public function answer(): HasOne
     {
-        return $this->belongsTo(Grade::class);
+        return $this->hasOne(Answer::class);
     }
 
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class);
-    }
 }

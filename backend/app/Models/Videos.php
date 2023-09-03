@@ -10,9 +10,24 @@ class Videos extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'video',
+        'video_path',
         'grade',
         'subject',
         'topic'
     ];
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class);
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class);
+    }
 }

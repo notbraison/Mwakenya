@@ -12,8 +12,8 @@ class VideosController extends Controller
     //
     function createvideo(Request $request){
         $request->validate([
-            'name' => 'required',
             'video' => 'required|file|mimes:mp4,avi,flv', // Validate video file type
+            'name' => 'required',
             'grade' => 'required',
             'subject' => 'required',
             'topic' => 'required',
