@@ -22,7 +22,7 @@ class VideosController extends Controller
 
         $videos = Videos::create([
             'name' => $request->name,
-            'video_path' => $videoPath, // Store the file path in the database
+            'videopath' => $videoPath, // Store the file path in the database
             'grade'=>$request->grade,
             'subject'=>$request->subject,
             'topic'=>$request->topic

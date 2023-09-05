@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     //
     function createUser(Request $request){
@@ -14,15 +15,21 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
+            'age' => 'required',
+            'usertype' => 'required',
+            
         ]);
 
-        $users = User::create([
+        $users = Users::create([
             'name' => $request->name,
             'email'=> $request->email,
-            'password'=>$request->password
+            'password'=>$request->password,
+            'age'=>$request->age,
+            'usertype'=>$request->usertype
+
         ]);
 
-        $usersCheck = User::find($users->id);
+        $usersCheck = Users::find($users->id);
 
         if($usersCheck){
             return response()->json($usersCheck);
@@ -33,7 +40,7 @@ class UserController extends Controller
     }
 
     function readAllUsers(){
-        $user = User::all();
+        $user = Users::all();
         
         if($user){
             return response()->json($user);
@@ -48,7 +55,7 @@ class UserController extends Controller
             'id' => 'required'
         ]);
 
-        $user = User::find($request->id);
+        $user = Users::find($request->id);
 
         if($user){
             // return response()->json($user);
@@ -64,7 +71,7 @@ class UserController extends Controller
             'id' => 'required'
         ]);
 
-        $user = User::find($request->id);
+        $user = Users::find($request->id);
 
         if($user){
             $user->name = $request->name;
@@ -82,7 +89,7 @@ class UserController extends Controller
             'id' => 'required'
         ]);
 
-        $user = User::find($request->id);
+        $user = Users::find($request->id);
 
         if($user){
             $deletedUser = $user;

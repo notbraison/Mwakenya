@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('grade');
-            $table->enum('gender', ['male', 'female']);
+            $table->string('grade')->nullable();
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->enum('usertype', ['student', 'parent', 'teacher','other']);
             $table->integer('age');
             $table->string('password');

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -17,13 +18,19 @@ class AuthController extends Controller
         $fields = $request->validate([
             'name'=> 'required|string',//should be type string
             'email'=> 'required|string|unique:users,email',//email should be unique
-            'password'=> 'required|string|confirmed'//confirm password field, error if the passwords don't match
+            'password'=> 'required|string|confirmed',//confirm password field, error if the passwords don't match
+            'age' => 'required',
+            'usertype' => 'required',
+            'grade' => '',
+            'gender' => ''
         ]);
 
-        $user = User::create([
+        $user = Users::create([
             'name'=> $fields['name'],
             'email'=> $fields['email'],
-            'password'=>bcrypt($fields['password'])//password is encrypted b4 stored in db
+            'password'=>bcrypt($fields['password']),//password is encrypted b4 stored in db
+            'age'=> $fields['age'],
+            'usertype'=> $fields['usertype'],
         ]);
 
         $token = $user->createToken('myAppToken')->plainTextToken;// var token uses created user to create a 
@@ -45,7 +52,7 @@ class AuthController extends Controller
         ]);
 
         //check if email exists
-        $user = User::where('email', $fields['email'])->first();//first instance of email
+        $user = Users::where('email', $fields['email'])->first();//first instance of email
         // dd($fields['password'],$user->password);
         //check password
         //if there is no such user or hash can't be verified return error message
