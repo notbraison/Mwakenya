@@ -29,7 +29,7 @@ class SubjectController extends Controller
     }
 
     function readAllSubjects(){
-        $Subject = Subject::all();
+        $Subject = Subject::all()->pluck('subject_name');
         
         if($Subject){
             return response()->json($Subject);

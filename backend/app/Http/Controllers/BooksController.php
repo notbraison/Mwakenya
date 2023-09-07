@@ -66,17 +66,17 @@ class BooksController extends Controller
         $request->validate([
             'id' => 'required'
         ]);
-
+    
         $books = Books::find($request->id);
-
+    
         if($books){
-            $books->name = $request->name;
-
+            $books->title = $request->title; // Update the 'title' field, not 'name'
+    
             $books->save();
             return response()->json($books);
         }
         else{
-            return response("Update unsuccessful, no such books exists");
+            return response("Update unsuccessful, no such book exists");
         }
     }
 

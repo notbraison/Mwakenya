@@ -1,27 +1,27 @@
 <template>
-  <div class="form-group" >
-      <form @submit.prevent="uploadVideo" id="videoform" enctype="multipart/form-data"  >
+  <div class="form-group">
+      <form @submit.prevent="uploadBook" id="bookform" enctype="multipart/form-data" >
 
-      <h2> Upload Video </h2>
-
+      <h2>Upload Book</h2>
       <br />
 
-      <input type="file" @change="handleFileChange" accept="video/*" name="video">
+      <input type="file" @change="handleFileChange" accept=".pdf, .mobi, .epub, .doc, .docx" name="book">
       <br /><br />
 
       <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Name of video" v-model="name" required>
+        <label for="name" class="form-label">Title</label>
+        <input type="text" class="form-control" id="name" placeholder="Title of the book" v-model="title" required>
       </div>
 
-      <label for="grade" class="form-label" >Grade</label>
-      <select v-model="selectedGrade" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+      <label for="grade" class="form-label">Grade</label>
+    <select v-model="selectedGrade" class="form-select" id="floatingSelect" aria-label="Floating label select example">
       <option value="" disabled>Select a grade</option>
-      <option v-for="grade in grades" :value="grade" :key="grade.id">{{ grade}}</option>
+      <option v-for="grade in grades" :value="grade" :key="grade.id">{{ grade }}</option>
       <option value="customgrade">Custom Grade</option>
     </select>
     <br>
     <input v-if="selectedGrade === 'customgrade'" class="input-group-text" v-model="customgrade" placeholder="Enter custom grade">
+    <br />
 
       <label for="subject" class="form-label">Subject</label>
       <select v-model="selectedSubject" class="form-select" id="floatingSelect1" aria-label="Floating label select example">
@@ -29,10 +29,9 @@
       <option v-for="subject in subjects" :value="subject" :key="subject.id">{{ subject }}</option>
       <option value="customsubject">Custom Subject</option>
     </select>
-    <br>
+      <br>
       <input v-if="selectedSubject === 'customsubject'" class="input-group-text" v-model="customsubject" placeholder="Enter custom subject">
-  
-     
+      
       <br /><br />
       <div>
         <button type="submit" class="btn btn-outline-success btn-lg">Upload</button>
@@ -45,17 +44,17 @@
 import axios from 'axios';
 
 export default {
-  name: 'AddVideos',
+  name: 'addBooks',
   data() {
     return {
-      name: '',
+      title: '',
       grade: 'Grade',
       subject: 'Subject',
-      topic: 'Topic',
       customgrade: '',
       customsubject: '',
-      selectedFile: null,
-      selectedGrade: null,
+      book:'',
+
+selectedGrade: null,
  selectedSubject: null,
 grades: [],    
 subjects: [],
@@ -70,13 +69,15 @@ subjects: [],
       // Extract title from the uploaded file name
       const fileName = event.target.files[0].name;
       const fileExtension = fileName.split('.').pop(); // Get the file extension
-      const name = fileName.replace(`.${fileExtension}`, ''); // Remove extension
-      this.name = name;
+      const title = fileName.replace(`.${fileExtension}`, ''); // Remove extension
+      this.title = title;
     },
+
     handleFileChange(event) {
       // Store the selected file for uploading
       this.extractTitleFromFileName(event);
-      this.selectedFile = event.target.files[0];
+      this.book = event.target.files[0];
+    
     },
 
     async fetchgns() {
@@ -92,30 +93,30 @@ subjects: [],
     }
   },
 
-    async uploadVideo() {
+    async uploadBook() {
 
-    if (this.grade === null) {
+     if (this.grade === null) {
       this.grade = this.customgrade;
     }
     if (this.subject === null) {
       this.subject = this.customsubject;
-    }
-  
+    } 
 
     try {
-     await axios.post('http://127.0.0.1:8000/api/videos', 
+     await axios.post('http://127.0.0.1:8000/api/books', 
       
-     {video: this.selectedFile, 
-      name: this.name,
+     {book: this.book, 
+      title: this.title,
       grade: this.grade,
       subject: this.subject,
-
     });
-      console.log('Video uploaded successfully!', response.data);
+    console.log(title)
+      console.log('Book uploaded successfully!',this.name);
     } catch (error) {
-      console.error('Error uploading video:', error);
+      console.error('Error uploading book:', error);
     }
   },
+ 
     
     
   },

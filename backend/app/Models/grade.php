@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Grade extends Model
 {
     use HasFactory;
+    protected $table = 'grade'; // Specify the actual table name
+
     protected $fillable =[
         'grade'
     ];

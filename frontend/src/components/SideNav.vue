@@ -5,24 +5,39 @@
       Select Criteria
     </a>
     <br>
-    <br>
-    <br>
     &nbsp;
-    <select v-model="selectedGrade">
-      <option v-for="grade in grades" :value="grade.id" :key="grade.id">{{ grade.name }}</option>
+    <select v-model="selectedGrade" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+      <option value="" disabled>Select a grade</option>
+      <option v-for="grade in grades" :value="grade" :key="grade.id">{{ grade}}</option>
+    </select>
+
+    &nbsp;
+    <select v-model="selectedSubject" class="form-select" id="floatingSelect1" aria-label="Floating label select example">
+      <option value="" disabled>Select a subject</option>
+      <option v-for="subject in subjects" :value="subject" :key="subject.id">{{ subject }}</option>
     </select>
     &nbsp;
-    <select v-model="selectedSubject">
-      <option v-for="subject in subjects" :value="subject.id" :key="subject.id">{{ subject.name }}</option>
-    </select>
-    &nbsp;
-    <select v-model="selectedTopic">
-      <option v-for="topic in topics" :value="topic.id" :key="topic.id">{{ topic.name }}</option>
-    </select>
+    
     <br>    <br>    <br>    <br>    <br>    <br>
-    <button @click="fetchVideos">Fetch Videos</button>
-    <br><br>
-    <router-link to="/addvideos"><button>Add Video</button></router-link>
+
+    <div v-if="isvideos">
+      <button @click="fetchVideos">Fetch Videos</button>
+    </div>
+    
+    <div v-if="isbooks">
+       <button @click="fetchBooks">Fetch Books</button>
+    </div>
+   
+    <br>
+    
+    <div v-if="isvideos">
+      <router-link to="/addvideos"><button class="btn btn-outline-success">Add Video</button></router-link>
+    </div>
+    <br>
+    <div v-if="isbooks">
+      <router-link to="/addbooks"><button class="btn btn-outline-success">Add Book</button></router-link>
+    </div>
+    
     &nbsp;
     </div>
 
@@ -34,6 +49,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default{
 name:'SideNav',
@@ -42,11 +58,13 @@ data() {
     return {
       selectedGrade: null,
       selectedSubject: null,
-      selectedTopic: null,
-      grades: [],     // Populate this from API response
-      subjects: [],   // Populate this from API response based on selectedGrade
-      topics: [],     // Populate this from API response based on selectedSubject
+      grades: [],    
+      subjects: [],    
+
     };
+  },
+  mounted() {
+    this.fetchgns();
   },
 
   methods: {
@@ -60,18 +78,46 @@ data() {
       //   .catch(error => {
       //     // Handle error
       //   });
+    },
+    fetchBooks() {
+      // Fetch videos based on selectedGrade, selectedSubject, and selectedTopic
+      // Example using axios library
+      // axios.get(`/api/videos?grade=${this.selectedGrade}&subject=${this.selectedSubject}&topic=${this.selectedTopic}`)
+      //   .then(response => {
+      //     // Update videos list in your main component
+      //   })
+      //   .catch(error => {
+      //     // Handle error
+      //   });
+    },
+    async fetchgns() {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/grade');
+      const response2 = await axios.get('http://127.0.0.1:8000/api/subject');
+      this.grades = response.data;
+      this.subjects = response2.data;
+ 
+    } catch (error) {
+      console.error('Error fetching grades:', error);
     }
+  },  
   },
   watch: {
-    selectedGrade() {
-      // Fetch subjects based on selectedGrade
-      // Update this.subjects based on the API response
-    },
+    
     selectedSubject() {
       // Fetch topics based on selectedSubject
       // Update this.topics based on the API response
     }
+  },
+  computed:{
+isbooks(){
+  return this.$route.path==='/books';
+},
+isvideos(){
+  return this.$route.path==='/videos';
+}
   }
+
 
 };
 

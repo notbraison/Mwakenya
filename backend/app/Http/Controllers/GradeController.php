@@ -29,7 +29,7 @@ class GradeController extends Controller
     }
 
     function readAllGrades(){
-        $Grade = Grade::all();
+        $Grade = Grade::all()->pluck('grade');
         
         if($Grade){
             return response()->json($Grade);

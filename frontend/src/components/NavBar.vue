@@ -9,7 +9,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="nav nav-tabs">
         <li class="nav-item">
           <router-link to="/" class="nav-link active">Home</router-link>
         </li>
@@ -21,6 +21,9 @@
         </li>
         <li class="nav-item">
           <router-link to="/videos" class="nav-link active">Videos</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/books" class="nav-link active">Books</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Compete</a>
