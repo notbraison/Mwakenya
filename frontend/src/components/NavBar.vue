@@ -26,7 +26,10 @@
           <router-link to="/books" class="nav-link active">Books</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Compete</a>
+          <router-link to="/revision" class="nav-link active">Compete</router-link>
+        </li>       
+        <li class="nav-item">
+          <router-link to="/logout" class="nav-link active">logout</router-link>
         </li>       
       </ul>
 

@@ -8,6 +8,8 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\QuestionsController;
+use App\Http\Controllers\AnswersController;
 
 
 /*
@@ -53,12 +55,29 @@ Route::get('/grade/{id}', [GradeController::class, 'readGrade']);
 Route::put('/grade/{id}', [GradeController::class, 'updateGrade']);
 Route::delete('/grade/{id}', [GradeController::class, 'deleteGrade']);
 
+//questions
+Route::get('/questions', [QuestionsController::class,'readAllquestions']);
+Route::post('/questions', [QuestionsController::class,'createquestion']);
+Route::get('/questions/{id}', [QuestionsController::class, 'readquestion']);
+Route::put('/questions/{id}', [QuestionsController::class, 'updatequestion']);
+Route::delete('/questions/{id}', [QuestionsController::class, 'deletequestion']);
+
+//answers
+Route::get('/answers', [AnswersController::class,'readAllanswers']);
+Route::post('/answers', [AnswersController::class,'createanswer']);
+Route::get('/answers/{id}', [AnswersController::class, 'readanswer']);
+Route::put('/answers/{id}', [AnswersController::class, 'updateanswer']);
+Route::delete('/answers/{id}', [AnswersController::class, 'deleteanswer']);
+
+
+
+
 
                                                      //Authentication
 
 //inside guard so yes auth
 Route::group(['middleware'=>['auth:sanctum']],function(){
-    Route::get('/users', [UserController::class,'readAllUsers']);
+    Route::get('/users', [UsersController::class,'readAllUsers']);
     Route::get('/users/{id}', [UsersController::class, 'readUser']);
 Route::put('/users/{id}', [UsersController::class, 'updateUser']);
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);

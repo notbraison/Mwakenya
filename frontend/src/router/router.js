@@ -6,6 +6,9 @@ import LearningVideos from '../pages/LearningVideos.vue';
 import AddVideos from '../pages/VideoUploader.vue';
 import  bookResources from '../pages/bookResources.vue';
 import addBooks from '../pages/bookUploader.vue';
+import QAuploader from '../pages/QAuploader.vue';
+import Revision from '../pages/Revision.vue';
+import Logout from '../pages/logout.vue';
 
 
 const routes=[
@@ -44,7 +47,21 @@ const routes=[
         path:'/addbooks',
         component: addBooks,
         name:'addbooks'
-    }
+    },
+    {
+        path:'/revision',//not finished
+        component:Revision,
+        name:'revision'
+    },
+    {
+        path:'/addQA',//not finished
+        component:QAuploader,
+    },
+    {
+        path:'/logout',
+        component:Logout,
+        name:'Logout'
+    },
 
 ]
 

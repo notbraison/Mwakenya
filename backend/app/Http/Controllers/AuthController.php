@@ -20,10 +20,12 @@ class AuthController extends Controller
             'email'=> 'required|string|unique:users,email',//email should be unique
             'password'=> 'required|string|confirmed',//confirm password field, error if the passwords don't match
             'age' => 'required',
-            'usertype' => 'required',
+            'usertype' => 'required|in:student,teacher,parent',
             'grade' => '',
             'gender' => ''
         ]);
+        $grade = $request->input('grade', 'N/A');
+$gender = $request->input('gender', 'Not specified');
 
         $user = Users::create([
             'name'=> $fields['name'],
@@ -31,6 +33,8 @@ class AuthController extends Controller
             'password'=>bcrypt($fields['password']),//password is encrypted b4 stored in db
             'age'=> $fields['age'],
             'usertype'=> $fields['usertype'],
+            'grade' => $grade,
+            'gender' => $gender,
         ]);
 
         $token = $user->createToken('myAppToken')->plainTextToken;// var token uses created user to create a 
@@ -41,14 +45,15 @@ class AuthController extends Controller
             'token'=>$token
         ];
 
-        return response($response, 201);
+        return response(['message' => 'User has been created successfully', 'data' => $response], 201);
+
     }
 
     
     public function login(Request $request){
         $fields = $request->validate([//what was received
-            'email'=> 'required|string',
-            'password'=> 'required|string'
+            'email'=> 'required',
+            'password'=> 'required'
         ]);
 
         //check if email exists
@@ -71,6 +76,7 @@ class AuthController extends Controller
 
         return response($response, 201);
     }
+    //'http://localhost:5173'
 
 //logout  
 //tokens are all deleted after logout is called

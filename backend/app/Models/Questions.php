@@ -13,7 +13,6 @@ class Questions extends Model
         'questionText',
         'grade',
         'subject',
-        'topic'
     ];
     public function answer(): HasOne
     {

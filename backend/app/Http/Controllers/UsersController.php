@@ -16,10 +16,11 @@ class UsersController extends Controller
             'email' => 'required',
             'password' => 'required',
             'age' => 'required',
-            'usertype' => 'required',
+            'usertype' => 'required|in:student,teacher,admin',
+            'grade' => '',
+            'gender' => '',
             
         ]);
-
         $users = Users::create([
             'name' => $request->name,
             'email'=> $request->email,
@@ -95,7 +96,7 @@ class UsersController extends Controller
             $deletedUser = $user;
 
             $user->delete();
-            return response()->json($deletedUser);
+            return response()->json($deletedUser,"User has been deleted");
         }
         else{
             return response("Delete unsuccessful, no such user exits");

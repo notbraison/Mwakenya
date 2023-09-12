@@ -20,11 +20,10 @@
         </div>
     
         <div class="btn-container">
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-success" form="loginform">Login</button>
             &nbsp;&nbsp;
-            <button type="reset" class="btn btn-warning">Reset</button>
+            <button type="reset" class="btn btn-warning" form="loginform">Reset</button>
         </div>
-        
       </div>
       </div>
     
@@ -35,6 +34,8 @@
     
     <script>
     import axios from 'axios';
+    
+
     export default{
       
         name:'LoginPage',
@@ -44,22 +45,52 @@
         email:'',
         password:'',
         response:'',
+        headers:''
       }
     },
 
     methods:{
-      async login(){
-       await axios.post('http://127.0.0.1:8000/api/login',
-        {
-         'email':this.email,
-         'password':this.password
-        });
+      async login() {
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/api/login', {
+      email: this.email,
+      password: this.password,
+    });
 
+    // Assuming your API returns a token upon successful login
+    const token = response.data.token;
+
+    // Store the token in Vuex
+    //this.$store.commit('setToken', token);
+
+    // Redirect to the 'Home' route
+    this.$router.push({ name: 'Home' });
+  } catch (error) {
+    console.log(error);
+  }
+},
+/* 
+//this code shows how to use tokens
+async fetchData() {
+  try {
+    // Include the token in the headers
+    const response = await axios.get('http://127.0.0.1:8000/api/data', {
+      headers: {
+        Authorization: `Bearer ${this.$store.state.token}`,
       },
+    });
+
+    // Handle the response data here
+  } catch (error) {
+    console.error(error);
+  }
+},
+
+*/
+
 
       async logcheck(){//check if i am logged in or not
-
-      }
+      },
     }
     }
 
