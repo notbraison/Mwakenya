@@ -69,19 +69,22 @@ class UsersController extends Controller
 
     function updateUser(Request $request){
         $request->validate([
-            'id' => 'required'
+            'email' => 'required|email',
+            'password' => 'required|confirmed|min:8', 
         ]);
-
-        $user = Users::find($request->id);
-
-        if($user){
-            $user->name = $request->name;
-
+    
+        // Find the user by email
+        $user = Users::where('email', $request->email)->first();
+    
+        if ($user) {
+            // Update the user's password
+            $user->password = bcrypt($request->password); // Ensure to hash the password
+    
             $user->save();
-            return response()->json($user);
-        }
-        else{
-            return response("Update unsuccessful, no such user exists");
+    
+            return response()->json(['message' => 'Password updated successfully']);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
         }
     }
 

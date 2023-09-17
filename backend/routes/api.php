@@ -79,7 +79,7 @@ Route::delete('/answers/{id}', [AnswersController::class, 'deleteanswer']);
 Route::group(['middleware'=>['auth:sanctum']],function(){
     Route::get('/users', [UsersController::class,'readAllUsers']);
     Route::get('/users/{id}', [UsersController::class, 'readUser']);
-Route::put('/users/{id}', [UsersController::class, 'updateUser']);
+
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
     Route::post('/logout',[AuthController::class,'logout']);
 });
@@ -87,6 +87,7 @@ Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
 //outside guard
 Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);  
+Route::put('/users', [UsersController::class, 'updateUser']);
 
 
 

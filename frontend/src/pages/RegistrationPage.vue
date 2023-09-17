@@ -7,6 +7,7 @@
 
   <div class="card-body">
     <h5 class="card-title">User Registration</h5><br>
+    
 
     <div class="mb-3">
     <label for="Name" class="form-label">Name</label>
@@ -64,6 +65,16 @@
         &nbsp;&nbsp;
         <button type="reset" class="btn btn-warning" form="registrationform">Reset</button>
     </div>
+
+    <p>
+      People who use our service may view your profile information on Mwakenya. <br> Learn more. <br>
+By clicking Register, you agree to our Terms, Privacy Policy and Cookies Policy.
+    </p>
+
+    <p>
+      Already a member <router-link class="link" to="/login">login</router-link>
+    </p>
+
 </div>
   </div>
 
@@ -156,4 +167,10 @@ export default{
     .form-control{
       width:  450px;
     }
+
+    .link{
+
+text-decoration: underline;
+font-weight: 800;
+}
 </style>

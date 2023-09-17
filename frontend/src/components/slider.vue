@@ -12,7 +12,7 @@
 
 <script>
 export default{
-    name:'slideShow',
+    name:'slider',
     data(){
         return{
             images:[

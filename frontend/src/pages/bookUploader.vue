@@ -5,7 +5,7 @@
       <h2>Upload Book</h2>
       <br />
 
-      <input type="file" @change="handleFileChange" accept=".pdf, .mobi, .epub, .doc, .docx" name="book">
+      <input type="file" @change="handleFileChange" accept=".pdf, .mobi, .epub, .doc, .docx" name="book" >
       <br /><br />
 
       <div class="mb-3">
@@ -53,7 +53,6 @@ export default {
       customgrade: '',
       customsubject: '',
       book:'',
-
 selectedGrade: null,
  selectedSubject: null,
 grades: [],    
@@ -65,6 +64,7 @@ subjects: [],
   },
 
   methods: {
+
     extractTitleFromFileName(event) {
       // Extract title from the uploaded file name
       const fileName = event.target.files[0].name;
@@ -76,7 +76,7 @@ subjects: [],
     handleFileChange(event) {
       // Store the selected file for uploading
       this.extractTitleFromFileName(event);
-      this.book = event.target.files[0];
+      book = event.target.files[0];
     
     },
 

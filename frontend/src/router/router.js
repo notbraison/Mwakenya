@@ -9,6 +9,7 @@ import addBooks from '../pages/bookUploader.vue';
 import QAuploader from '../pages/QAuploader.vue';
 import Revision from '../pages/Revision.vue';
 import Logout from '../pages/logout.vue';
+import ForgotPassword from '../pages/ForgotPassword.vue';
 
 
 const routes=[
@@ -61,6 +62,11 @@ const routes=[
         path:'/logout',
         component:Logout,
         name:'Logout'
+    },
+    {
+        path:'/forgotpassword',
+        component:ForgotPassword,
+        name:'ForgotPassword'
     },
 
 ]

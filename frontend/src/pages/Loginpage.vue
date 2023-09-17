@@ -25,6 +25,7 @@
             <button type="reset" class="btn btn-warning" form="loginform">Reset</button>
         </div>
       </div>
+      <p class="link"><router-link to="/forgotpassword">Forgot Password ?</router-link></p>
       </div>
     
         </form>
@@ -45,7 +46,8 @@
         email:'',
         password:'',
         response:'',
-        headers:''
+        headers:'',
+        token:''
       }
     },
 
@@ -58,7 +60,7 @@
     });
 
     // Assuming your API returns a token upon successful login
-    const token = response.data.token;
+     token = response.data.token;
 
     // Store the token in Vuex
     //this.$store.commit('setToken', token);
@@ -122,5 +124,10 @@ async fetchData() {
     }
     .form-control{
       width:  450px;
+    }
+    .link{
+
+      text-decoration: underline;
+      font-weight: 800;
     }
     </style>
