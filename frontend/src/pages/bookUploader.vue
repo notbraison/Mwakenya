@@ -41,22 +41,27 @@
 </template>
 
 <script>
+import { ref} from "vue";
 import axios from 'axios';
+
 
 export default {
   name: 'addBooks',
+
   data() {
     return {
-      title: '',
-      grade: 'Grade',
-      subject: 'Subject',
+      
       customgrade: '',
       customsubject: '',
-      book:'',
 selectedGrade: null,
  selectedSubject: null,
 grades: [],    
 subjects: [],
+request:null,//used to hold all data
+book : ref(null),
+title:'',
+
+
     };
   },
   mounted() {
@@ -66,17 +71,20 @@ subjects: [],
   methods: {
 
     extractTitleFromFileName(event) {
-      // Extract title from the uploaded file name
-      const fileName = event.target.files[0].name;
-      const fileExtension = fileName.split('.').pop(); // Get the file extension
-      const title = fileName.replace(`.${fileExtension}`, ''); // Remove extension
-      this.title = title;
-    },
+  // Extract title from the uploaded file name
+  const fileName = event.target.files[0].name;
+  const fileExtension = fileName.split('.').pop(); // Get the file extension
+  this.title = fileName.replace(`.${fileExtension}`, ''); // Set the title property
+},
+
 
     handleFileChange(event) {
+      
       // Store the selected file for uploading
       this.extractTitleFromFileName(event);
-      book = event.target.files[0];
+      
+      this.book/* .value */ = event.target.files[0];
+      debugger;
     
     },
 
@@ -95,26 +103,38 @@ subjects: [],
 
     async uploadBook() {
 
-     if (this.grade === null) {
-      this.grade = this.customgrade;
+     if (this.selectedGrade === null) {
+      this.selectedGrade = this.customgrade;
     }
-    if (this.subject === null) {
-      this.subject = this.customsubject;
+    if (this.selectedSubject === null) {
+      this.selectedSubject = this.customsubject;
     } 
 
+    const data = new FormData(); // Use FormData for file uploads
+  data.append("book", this.book); // Add the book file
+  data.append("title", this.title);
+  data.append("grade", this.selectedGrade);
+  data.append("subject", this.selectedSubject);
+ 
+  debugger
+
     try {
-     await axios.post('http://127.0.0.1:8000/api/books', 
-      
-     {book: this.book, 
-      title: this.title,
-      grade: this.grade,
-      subject: this.subject,
+
+    const endpoint ='http://127.0.0.1:8000/api/books';
+    const response = await axios.post(endpoint, data,{
+      headers: {
+        'Content-Type': 'multipart/form-data', // Set the content type for file upload
+      },
     });
-    console.log(title)
-      console.log('Book uploaded successfully!',this.name);
-    } catch (error) {
-      console.error('Error uploading book:', error);
-    }
+     
+  console.log(response.data); // Logging the response from the API
+  
+  console.log('Book uploaded successfully!', this.title); // Corrected the usage of this.title and this.name
+  alert('Book uploaded successfully!', this.title);
+} catch (error) {
+  console.error('Error uploading book:', error);
+}
+
   },
  
     
