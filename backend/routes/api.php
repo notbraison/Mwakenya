@@ -35,9 +35,9 @@ Route::put('/videos/{id}', [VideosController::class, 'updatevideo']);
 Route::delete('/videos/{id}', [VideosController::class, 'deletevideo']);
 
 //books
-Route::get('/books', [BooksController::class,'readAllbooks']);
+Route::get('/bookss', [BooksController::class,'readAllbooks']);
+Route::get('/books', [BooksController::class, 'readbookgs']);
 Route::post('/books', [BooksController::class,'createbooks']);
-Route::get('/books/{id}', [BooksController::class, 'readbooks']);
 Route::put('/books/{id}', [BooksController::class, 'updatebooks']);
 Route::delete('/books/{id}', [BooksController::class, 'deletebooks']);
 

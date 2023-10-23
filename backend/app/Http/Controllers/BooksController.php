@@ -46,19 +46,36 @@ class BooksController extends Controller
         }
     }
 
-    function readbooks(Request $request){
+ 
+    
+   
+    function readbookgs(Request $request){//according to grade and subject hence the gs
         $request->validate([
-            'id' => 'required'
+            'grade' => 'required',
+            'subject' => 'required'
         ]);
 
-        $books = Books::find($request->id);
+        $grade = $request->grade;
+        $subject = $request->subject;
 
-        if($books){
-            // return response()->json($books);
-            return response()->json(['email'=>$books->email]);
-        }
-        else{
-            return response("No such books exists");
+    // Query the books based on grade and subject
+    $books = Books::where('grade', $grade)
+                  ->where('subject', $subject)
+                  ->get();
+
+        
+        if($books->isNotEmpty()){
+            $bookData = $books->map(function ($book) {
+                return [
+                    'title' => $book->title,
+                    'grade' => $book->grade,
+                    'subject' => $book->subject,
+                ];
+            });
+    
+            return response()->json(['books' => $bookData]);
+        } else {
+            return response("No such books exist");
         }
     }
 

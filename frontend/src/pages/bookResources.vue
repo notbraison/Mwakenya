@@ -5,9 +5,13 @@
 
     <div>
       <h1>Books List</h1>
-      <ul>
+      <!-- <ul>
         <li v-for="book in books" :key="book.id">{{ book.name }}</li>
-      </ul>
+      </ul> -->
+
+     <BookView/> 
+
+    
     </div>
   </div>
 </template>
@@ -16,29 +20,42 @@
 import axios from 'axios';
 import SearchBar from '../components/SearchBar.vue';
 import SideNav from '../components/SideNav.vue';
+import BookView from '../components/BookView.vue';
 
 export default {
   name: 'bookResources',
   components: {
     SearchBar,
     SideNav,
+    BookView
   },
   data() {
     return {
-      books: [], // Store the filtered books
+      books: [], // Store the filtered books,
+      criteria//store selected grade subject
     };
   },
   methods: {
-    fetchBooks(criteria) {
-      // Call the backend API to fetch books based on criteria
-      axios
-        .get('/api/books', { params: criteria }) // Pass criteria as query parameters
+    async fetchBooks(criteria) {
+      try{
+
+        // Call the backend API to fetch books based on criteria
+      //criteria is grade and subjects
+
+      criteria = {
+        selectedGrade,
+        selectedSubject
+      }
+      
+      axios.get('/api/books', { params: criteria }) // Pass criteria as query parameters
         .then((response) => {
           this.books = response.data;
         })
-        .catch((error) => {
+        
+      }catch(error) {
           console.error('Error fetching books:', error);
-        });
+        };
+      
     },
   },
   mounted() {

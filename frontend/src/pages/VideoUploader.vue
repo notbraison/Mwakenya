@@ -32,6 +32,10 @@
     <br>
       <input v-if="selectedSubject === 'customsubject'" class="input-group-text" v-model="customsubject" placeholder="Enter custom subject">
   
+      <div class="mb-3">
+        <label for="topic" class="form-label">Topic</label>
+        <input type="text" class="form-control" id="topic" placeholder="topic of video" v-model="selectedTopic" required>
+      </div>
      
       <br /><br />
       <div>
@@ -42,6 +46,7 @@
 </template>
 
 <script>
+import { ref} from "vue";
 import axios from 'axios';
 
 export default {
@@ -49,16 +54,16 @@ export default {
   data() {
     return {
       name: '',
-      grade: 'Grade',
-      subject: 'Subject',
-      topic: 'Topic',
       customgrade: '',
       customsubject: '',
-      selectedFile: null,
+      video : ref(null),
       selectedGrade: null,
  selectedSubject: null,
+ selectedTopic: null,
 grades: [],    
 subjects: [],
+
+
     };
   },
   mounted() {
@@ -66,8 +71,8 @@ subjects: [],
   },
 
   methods: {
-    extractTitleFromFileName(event) {
-      // Extract title from the uploaded file name
+    extractNameFromFileName(event) {
+      // Extract name from the uploaded file name
       const fileName = event.target.files[0].name;
       const fileExtension = fileName.split('.').pop(); // Get the file extension
       const name = fileName.replace(`.${fileExtension}`, ''); // Remove extension
@@ -75,8 +80,8 @@ subjects: [],
     },
     handleFileChange(event) {
       // Store the selected file for uploading
-      this.extractTitleFromFileName(event);
-      this.selectedFile = event.target.files[0];
+      this.extractNameFromFileName(event);
+      this.video = event.target.files[0];
     },
 
     async fetchgns() {
@@ -92,30 +97,50 @@ subjects: [],
     }
   },
 
-    async uploadVideo() {
+      async uploadVideo() {
 
-    if (this.grade === null) {
-      this.grade = this.customgrade;
-    }
-    if (this.subject === null) {
-      this.subject = this.customsubject;
-    }
-  
+        if (this.selectedGrade === null) {
+        this.selectedGrade = this.customgrade;
+      }
+      if (this.selectedSubject === null) {
+        this.selectedSubject = this.customsubject;
+      } 
 
-    try {
-     await axios.post('http://127.0.0.1:8000/api/videos', 
+      /* console.log("this.video:", this.video);
+console.log("this.name:", this.name);
+console.log("this.selectedGrade:", this.selectedGrade);
+console.log("this.selectedSubject:", this.selectedSubject);
+console.log("this.selectedTopic:", this.selectedTopic); */
+
+      const datam = new FormData(); // Use FormData for file uploads
       
-     {video: this.selectedFile, 
-      name: this.name,
-      grade: this.grade,
-      subject: this.subject,
+    datam.append("video", this.video);
+    datam.append("name", this.name);
+    datam.append("grade", this.selectedGrade);
+    datam.append("subject", this.selectedSubject);
+    datam.append("topic", this.selectedTopic);
 
+    console.log("FormData:", datam);
+
+
+      try {
+        const endpoint = 'http://127.0.0.1:8000/api/videos';
+        const  res = await axios.post(endpoint,datam,{
+      headers: {
+        'Content-Type': 'multipart/form-data', // Set the content type for file upload
+      },
     });
-      console.log('Video uploaded successfully!', response.data);
-    } catch (error) {
-      console.error('Error uploading video:', error);
-    }
-  },
+      debugger
+
+        console.log(res.data);
+
+        
+        console.log('Video uploaded successfully!', this.name); 
+        alert('Video uploaded successfully', this.name);
+      } catch (error) {
+        console.error('Error uploading video:', error);
+      }
+    },
     
     
   },

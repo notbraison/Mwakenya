@@ -11,30 +11,26 @@ class VideosController extends Controller
 {
     //
     function createvideo(Request $request){
-        $request->validate([
-            'video' => 'required|file|mimes:mp4,avi,flv', // Validate video file type
-            'name' => 'required',
-            'grade' => 'required',
-            'subject' => 'required',
-            'topic' => 'required',
-        ]);
-        $videoPath = $request->file('video')->store('videos', 'public');
-
-        $videos = Videos::create([
-            'name' => $request->name,
-            'videopath' => $videoPath, // Store the file path in the database
-            'grade'=>$request->grade,
-            'subject'=>$request->subject,
-            'topic'=>$request->topic
-        ]);
-
-        $videosCheck = Videos::find($videos->id);
-
-        if($videosCheck){
-            return response()->json($videosCheck);
-        }
-        else{
-            return response("video creation unsuccessful",500);
+        try {
+            $request->validate([
+                'video' => 'required|file|mimetypes:video/mp4,avi,flv',
+                'name' => 'required',
+                'grade' => 'required',
+                'subject' => 'required',
+                'topic' => '',
+            ]);
+    
+            $videoPath = $request->file('video')->store('videos', 'public');
+    
+            $videos = Videos::create($request->only(['name', 'grade', 'subject', 'topic']) + ['videopath' => $videoPath]);
+    
+            $videos = Videos::findOr($videos->id, function () {
+                return response("Video not found", 404);
+            });
+    
+            return response()->json($videos);
+        } catch (\Exception $e) {
+            return response("Video creation unsuccessful", 500);
         }
     }
 

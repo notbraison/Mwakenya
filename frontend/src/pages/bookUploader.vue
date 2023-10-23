@@ -82,9 +82,8 @@ title:'',
       
       // Store the selected file for uploading
       this.extractTitleFromFileName(event);
-      
-      this.book/* .value */ = event.target.files[0];
-      debugger;
+      this.book = event.target.files[0];
+     
     
     },
 
@@ -116,7 +115,6 @@ title:'',
   data.append("grade", this.selectedGrade);
   data.append("subject", this.selectedSubject);
  
-  debugger
 
     try {
 
@@ -129,7 +127,7 @@ title:'',
      
   console.log(response.data); // Logging the response from the API
   
-  console.log('Book uploaded successfully!', this.title); // Corrected the usage of this.title and this.name
+  console.log('Book uploaded successfully!', this.title); 
   alert('Book uploaded successfully!', this.title);
 } catch (error) {
   console.error('Error uploading book:', error);
